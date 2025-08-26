@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-10">
+    <div class="container mx-auto p-6 bg-white rounded-xl shadow-lg w-full max-w-2xl">
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-6">Calculator ➕➖✖️➗</h1>
+        <p class="text-center text-gray-600 mb-8">Type a math problem and press calculate</p>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+            <input
+                type="text"
+                id="mathInput"
+                placeholder="Write your question..."
+                class="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 text-lg text-left"
+            />
+            <button
+                id="calculateButton"
+                class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out flex items-center justify-center gap-2"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/><line x1="4" y1="14" x2="20" y2="14"/><line x1="4" y1="10" x2="20" y2="10"/></svg>
+                احسب
+            </button>
+        </div>
+
+        <div id="resultContainer" class="mt-8 text-center hidden p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-2">The result:</h2>
+            <p id="mathResult" class="text-3xl font-bold text-green-800"></p>
+        </div>
+
+        <div id="errorContainer" class="mt-8 hidden p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg" role="alert">
+            <strong class="font-bold">mistake</strong>
+            <span id="errorMessage" class="block sm:inline">The question is wrong.</span>
+        </div>
+    </div>
+
+    <script>
+        const mathInput = document.getElementById('mathInput');
+        const calculateButton = document.getElementById('calculateButton');
+        const resultContainer = document.getElementById('resultContainer');
+        const mathResult = document.getElementById('mathResult');
+        const errorContainer = document.getElementById('errorContainer');
+        const errorMessage = document.getElementById('errorMessage');
+
+        calculateButton.addEventListener('click', () => {
+            const expression = mathInput.value.trim();
+
+            resultContainer.classList.add('hidden');
+            errorContainer.classList.add('hidden');
+
+            if (!expression) {
+                errorMessage.textContent = 'Write the question';
+                errorContainer.classList.remove('hidden');
+                return;
+            }
+
+            const validExpressionRegex = /^[\d\s\.\+\-\*\/\(\)]+$/;
+
+            if (!validExpressionRegex.test(expression)) {
+                errorMessage.textContent = 'Error in the math problem.';
+                errorContainer.classList.remove('hidden');
+                return;
+            }
+
+            try {
+                
+                const result = eval(expression);
+
+                if (typeof result === 'number' && !isNaN(result)) {
+                    mathResult.textContent = result;
+                    resultContainer.classList.remove('hidden');
+                } else {
+                    errorMessage.textContent = 'Error in the math problem.';
+                    errorContainer.classList.remove('hidden');
+                }
+
+            } catch (error) {
+                errorMessage.textContent ='Error in the math problem.';
+                errorContainer.classList.remove('hidden');
+                console.error("Evaluation error:", error);
+            }
+        });
+
+        mathInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                calculateButton.click();
+            }
+        });
+    </script>
+</body>
+</html>

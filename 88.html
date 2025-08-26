@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صورة متحركة</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; 
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+        }
+
+        .animated-image-container {
+            width: 80%; 
+            max-width: 400px; 
+            border: 3px solid #4CAF50;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+            padding: 10px; 
+            background-color: white;
+            text-align: center;
+        }
+
+        #myAnimatedImage {
+            width: 100%; 
+            height: auto; 
+            display: block; 
+            margin: 0 auto; 
+            animation: bounce 2s infinite alternate; 
+            transform-origin: bottom;
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .instruction {
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="animated-image-container">
+        <img id="myAnimatedImage" src="https://i.pinimg.com/originals/e1/48/a8/e148a85bc8b16042c190ef33ddb6a505.gif" alt="animated image">
+    </div>
+    
+    <p class="instruction">This image is moving using</p>CSS!</p>
+
+</body>
+</html>
